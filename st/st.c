@@ -1273,8 +1273,6 @@ tscrollup(int top, int bot, int n, int mode)
 	int savehist = !alt && top == 0 && mode != SCROLL_NOSAVEHIST;
 	Line temp;
 
-	LIMIT(n, 0, term.bot-orig+1);
-
 	if (n <= 0)
 		return;
 	n = MIN(n, bot-top+1);
