@@ -199,6 +199,10 @@ static MouseShortcut mshortcuts[] = {
 #define MODKEY Mod1Mask
 #define TERMMOD (ControlMask|ShiftMask)
 
+static char *openurlcmd[] = { "/bin/sh", "-c", "st-urlhandler -o", "externalpipe", NULL };
+static char *copyurlcmd[] = { "/bin/sh", "-c", "st-urlhandler -c", "externalpipe", NULL };
+static char *copyoutput[] = { "/bin/sh", "-c", "st-copyout", "externalpipe", NULL };
+
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
 	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
@@ -217,6 +221,10 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_D,           kscrolldown,    {.i = -1} },
 	{ TERMMOD,              XK_K,           kscrollup,      {.i =  1} },
 	{ TERMMOD,              XK_J,           kscrolldown,    {.i =  1} },
+	{ MODKEY,               XK_l,           externalpipe,   {.v = openurlcmd } },
+	{ MODKEY,               XK_y,           externalpipe,   {.v = copyurlcmd } },
+	{ MODKEY,               XK_o,           externalpipe,   {.v = copyoutput } },
+
 };
 
 /*
@@ -226,7 +234,7 @@ static Shortcut shortcuts[] = {
  * * Use XK_ANY_MOD to match the key no matter modifiers state
  * * Use XK_NO_MOD to match the key alone (no modifiers)
  * appkey value:
- * * 0: no value
+* * 0: no value
  * * > 0: keypad application mode enabled
  * *   = 2: term.numlock = 1
  * * < 0: keypad application mode disabled
