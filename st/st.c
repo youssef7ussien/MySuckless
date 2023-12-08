@@ -237,6 +237,7 @@ static STREscape strescseq;
 static int iofd = 1;
 static int cmdfd;
 static pid_t pid;
+static int extpipeactive = 0;
 
 static const uchar utfbyte[UTF_SIZ + 1] = {0x80,    0, 0xC0, 0xE0, 0xF0};
 static const uchar utfmask[UTF_SIZ + 1] = {0xC0, 0x80, 0xE0, 0xF0, 0xF8};
@@ -740,15 +741,19 @@ sigchld(int a)
 	int stat;
 	pid_t p;
 
-	if ((p = waitpid(pid, &stat, WNOHANG)) < 0)
+	if ((p = waitpid((extpipeactive ? -1 : pid), &stat, WNOHANG)) < 0)
 		die("waiting for pid %hd failed: %s\n", pid, strerror(errno));
 
 	if (pid != p) {
+		if (!extpipeactive)
+			return;
+
 		if (p == 0 && wait(&stat) < 0)
 			die("wait: %s\n", strerror(errno));
 
 		/* reinstall sigchld handler */
 		signal(SIGCHLD, sigchld);
+		extpipeactive = 0;
 		return;
 	}
 
@@ -2172,6 +2177,7 @@ externalpipe(const Arg *arg)
 	close(to[1]);
 	/* restore */
 	signal(SIGPIPE, oldsigpipe);
+	extpipeactive = 1;
 }
 
 void
