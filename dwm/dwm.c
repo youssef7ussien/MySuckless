@@ -93,6 +93,7 @@ struct Client {
 	int basew, baseh, incw, inch, maxw, maxh, minw, minh, hintsvalid;
 	int bw, oldbw;
 	unsigned int tags;
+	unsigned int switchtag;
 	int isfixed, iscentered, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
 	Client *next;
 	Client *snext;
@@ -141,6 +142,7 @@ typedef struct {
 	const char *title;
 	unsigned int tags;
 	int iscentered;
+	int switchtag;
 	int isfloating;
 	int monitor;
 } Rule;
@@ -293,7 +295,7 @@ void
 applyrules(Client *c)
 {
 	const char *class, *instance;
-	unsigned int i;
+	unsigned int i, newtagset;
 	const Rule *r;
 	Monitor *m;
 	XClassHint ch = { NULL, NULL };
@@ -318,6 +320,25 @@ applyrules(Client *c)
 			for (m = mons; m && m->num != r->monitor; m = m->next);
 			if (m)
 				c->mon = m;
+
+			if (r->switchtag) {
+				selmon = c->mon;
+				if (r->switchtag == 2 || r->switchtag == 4)
+					newtagset = c->mon->tagset[c->mon->seltags] ^ c->tags;
+				else
+					newtagset = c->tags;
+
+				if (newtagset && !(c->tags & c->mon->tagset[c->mon->seltags])) {
+					if (r->switchtag == 3 || r->switchtag == 4)
+						c->switchtag = c->mon->tagset[c->mon->seltags];
+					if (r->switchtag == 1 || r->switchtag == 3)
+						view(&((Arg) { .ui = newtagset }));
+					else {
+						c->mon->tagset[c->mon->seltags] = newtagset;
+						arrange(c->mon);
+					}
+				}
+			}
 		}
 	}
 	if (ch.res_class)
@@ -1494,6 +1515,8 @@ sendmon(Client *c, Monitor *m)
 	attachstack(c);
 	focus(NULL);
 	arrange(NULL);
+	if (c->switchtag)
+		c->switchtag = 0;
 }
 
 void
@@ -1734,6 +1757,8 @@ tag(const Arg *arg)
 {
 	if (selmon->sel && arg->ui & TAGMASK) {
 		selmon->sel->tags = arg->ui & TAGMASK;
+		if (selmon->sel->switchtag)
+			selmon->sel->switchtag = 0;
 		focus(NULL);
 		arrange(selmon);
 	}
@@ -1874,6 +1899,7 @@ void
 unmanage(Client *c, int destroyed)
 {
 	Monitor *m = c->mon;
+	unsigned int switchtag = c->switchtag;
 	XWindowChanges wc;
 
 	detach(c);
@@ -1894,6 +1920,8 @@ unmanage(Client *c, int destroyed)
 	focus(NULL);
 	updateclientlist();
 	arrange(m);
+	if (switchtag)
+		view(&((Arg) { .ui = switchtag }));
 }
 
 void
