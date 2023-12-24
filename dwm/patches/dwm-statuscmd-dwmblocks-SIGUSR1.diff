@@ -1,0 +1,28 @@
+Date: Sun, 24 Dec 2023 03:25:30 
+Subject: [PATCH] [statuscmd] change signal to SIGUSR1 to work with luka's dwmblocks buil
+[issue 1](https://github.com/LukeSmithxyz/dwmblocks/issues/77)
+[issue 2](https://github.com/LukeSmithxyz/dwmblocks/issues/78)
+
+---
+ dwm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/dwm.c b/dwm.c
+index 7219cc2..0c5d91f 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -1704,11 +1704,11 @@ sigstatusbar(const Arg *arg)
+
+	if (!statussig)
+		return;
+-	sv.sival_int = arg->i;
++	sv.sival_int = arg->i | (statussig << 8);
+	if ((statuspid = getstatusbarpid()) <= 0)
+		return;
+
+-	sigqueue(statuspid, SIGRTMIN+statussig, sv);
++	sigqueue(statuspid, SIGUSR1, sv);
+ }
+
+ void
+--
