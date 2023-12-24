@@ -8,7 +8,7 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 4;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 6;        /* vertical padding for statusbar */
 static const int focusonwheel       = 0;
-static const char *fonts[]          = { "JetBrainsMono NF:size=9" };
+static const char *fonts[]          = { "JetBrainsMono NF:size=9", "NotoColorEmoji:pixelsize=9:antialias=true:autohint=true" };
 static const char dmenufont[]       = "JetBrainsMono NFM:size=9";
 static const char col_gray1[]       = "#1D1D1D";
 static const char col_gray2[]       = "#665c54";
