@@ -11,10 +11,10 @@ static const int focusonwheel       = 0;
 static const char *fonts[]          = { "JetBrainsMono NF:size=9", "NotoColorEmoji:pixelsize=9:antialias=true:autohint=true" };
 static const char dmenufont[]       = "JetBrainsMono NFM:size=9";
 static const char col_gray1[]       = "#1D1D1D";
-static const char col_gray2[]       = "#665c54";
+static const char col_gray2[]       = "#8B7E72";
 static const char col_gray3[]       = "#d5c4a1";
 static const char col_gray4[]       = "#ebdbb2";
-static const char col_gray5[]        = "#32302f";
+static const char col_gray5[]        = "#413F3D";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
   [SchemeNorm] = { col_gray3, col_gray1, col_gray5 },
