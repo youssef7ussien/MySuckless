@@ -28,21 +28,27 @@ static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
+	 *  WM_WINDOW_ROLE(STRING) = role
 	 */
-	/* class                  instance    title           tags mask    iscentered     switchtag    isfloating   monitor */
-	{ "Gimp",                 NULL,       NULL,           0,           0,             1,           1,           -1 },
-  { "jetbrains-studio",     NULL,       NULL,           0,           1,             0,           1,           -1 },
-  { "VSCodium",             NULL,       NULL,           1 << 1,      0,             0,           0,            0 },
-  { "firefox",              NULL,       NULL,           1 << 8,      0,             1,           0,           -1 },
-	{ "Google-chrome",        NULL,       NULL,           1,           0,             1,           0,            1 },
-  { "chromium-float",       NULL,       NULL,           0,           1,             0,           1,           -1 },
-  { "firefox-float",        NULL,       NULL,           0,           1,             0,           1,           -1 },
-  { "st-256color-float",    NULL,       NULL,           0,           1,             0,           1,           -1 },
-  { "tmux-256color-float",  NULL,       NULL,           0,           1,             0,           1,           -1 },
-  { "mpv",                  NULL,       NULL,           0,           1,             0,           1,           -1 },
-  { "ticktick",             NULL,       NULL,           1 << 7,      1,             0,           1,           -1 },
-  { "TelegramDesktop",      NULL,       NULL,           1 << 7,      1,             1,           1,           -1 },
-  { "Qalculate-gtk",        NULL,       NULL,           0,           1,             0,           1,           -1 },
+	/* class                  role        instance    title           tags mask    iscentered     switchtag    isfloating   monitor */
+  { "LibreWolf",            "browser",       NULL,            NULL,       1,         0,          1,         0,           1 },
+  { "LibreWolf",            NULL,            "Devtools",      NULL,       0,         1,          0,         1,          -1 },
+  { "jetbrains-studio",     NULL,            NULL,            NULL,       1 << 1,    0,          0,         0,          -1 },
+  { "VSCodium",             NULL,            NULL,            NULL,       1 << 1,    0,          0,         0,          -1 },
+	{ "Gimp",                 NULL,            NULL,            NULL,       1 << 4,    0,          1,         0,          -1 },
+	{ "Inkscape",             NULL,            NULL,            NULL,       1 << 4,    0,          1,         0,          -1 },
+	{ "Soffice",              NULL,            NULL,            NULL,       1 << 3,    0,          1,         0,          -1 },
+	{ "Thunar",               NULL,            NULL,            NULL,       1 << 2,    0,          1,         0,          -1 },
+  { "Nsxiv",                NULL,            NULL,            NULL,       0,         1,          0,         1,          -1 },
+  { "st-256color-float",    NULL,            NULL,            NULL,       0,         1,          0,         1,          -1 },
+  { "tmux-256color-float",  NULL,            NULL,            NULL,       0,         1,          0,         1,          -1 },
+  { "sakura-float",         NULL,            NULL,            NULL,       0,         1,          0,         1,          -1 },
+  { "kitty-float",          NULL,            NULL,            NULL,       0,         1,          0,         1,          -1 },
+  { "Mousepad",             NULL,            NULL,            NULL,       0,         1,          0,         1,          -1 },
+  { "mpv",                  NULL,            NULL,            NULL,       0,         1,          0,         1,          -1 },
+  { "obsidian",             NULL,            NULL,            NULL,       1 << 6,    0,          0,         0,          -1 },
+  { "TelegramDesktop",      NULL,            NULL,            NULL,       1 << 7,    1,          1,         1,          -1 },
+  { "Qalculate-gtk",        NULL,            NULL,            NULL,       0,         1,          0,         1,          -1 },
 };
 
 /* layout(s) */
