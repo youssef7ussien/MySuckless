@@ -1718,6 +1718,8 @@ sendmon(Client *c, Monitor *m)
 	arrange(c->mon);
 	c->mon = m;
 	c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
+	c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
+	c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
 	attachaside(c);
 	attachstack(c);
 	arrange(m);
