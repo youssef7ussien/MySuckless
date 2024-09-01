@@ -8,9 +8,8 @@
 static char *font = "JetBrainsMono NFM:pixelsize=12:antialias=true:autohint=true";
 /* Spare fonts */
 static char *font2[] = {
-  "Kawkab Mono:pixelsize=9:antialias=true:autohint=true",
-	"Inconsolata for Powerline:pixelsize=12:antialias=true:autohint=true",
-	"Hack Nerd Font Mono:pixelsize=11:antialias=true:autohint=true",
+	"DejaVu Sans Mono:pixelsize=12:antialias=true:autohint=true",
+	"NotoColorEmoji:pixelsize=11:antialias=true:autohint=true",
 };
 
 static int borderpx = 8;
